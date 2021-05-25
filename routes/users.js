@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../app/api/controllers/users');
-const validJWT = require('../app/api/middleware/validate');
+const userController = require('../controllers/users');
+const validJWT = require('../middleware/validate');
 
-router.post('/register', userController.create);
+router.post('/create', userController.create);
 router.post('/authenticate', userController.authenticate);
-router.get('/userList/firstName/:name/:page?', validJWT.validJWTNeeded, userController.userListFirstName);
-router.get('/userList/lastName/:name/:page?', validJWT.validJWTNeeded, userController.userListLastName);
-router.get('/userList/employee/:id/:page?', validJWT.validJWTNeeded, userController.userListEmployee);
+router.get('/:page?', validJWT.validJWTNeeded, userController.getUserList);
+router.delete('/:id', validJWT.validJWTNeeded, userController.deleteUser);
 
 module.exports = router;
